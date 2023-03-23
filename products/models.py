@@ -1,4 +1,5 @@
 from django.db import models
+
 from users.models import User
 
 # Create your models here.
@@ -7,6 +8,10 @@ from users.models import User
 class ProductCategory(models.Model):
     name = models.CharField(max_length=128, unique=True)
     description = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "category"
+        verbose_name_plural = 'categories'
 
     def __str__(self):
         return self.name
@@ -19,6 +24,10 @@ class Product(models.Model):
     quantity = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='product_images')
     category = models.ForeignKey(to=ProductCategory, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name = "product"
+        verbose_name_plural = 'products'
 
     def __str__(self):
         return f"Product: {self.name} | Categoty: {self.category.name}"
@@ -45,4 +54,3 @@ class Basket(models.Model):
 
     def sum(self):
         return self.product.price * self.quantity
-

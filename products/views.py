@@ -1,19 +1,24 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
-from products.models import ProductCategory, Product, Basket
-from django.contrib.auth.decorators import login_required
+
+from common.views import TitleMixin
+from products.models import Basket, Product, ProductCategory
+
 # Create your views here.
 
 
-class IndexView(TemplateView):
+class IndexView(TitleMixin, TemplateView):
     template_name = 'products/index.html'
+    title = "Store"
 
 
-class ProductsListView(ListView):
+class ProductsListView(TitleMixin, ListView):
     model = Product
     template_name = 'products/products.html'
     paginate_by = 3
+    title = 'Store - Catalog'
 
     def get_queryset(self):
         queryset = super(ProductsListView, self).get_queryset()
