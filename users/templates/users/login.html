@@ -1,4 +1,5 @@
 {% extends 'users/base.html' %}
+{% load socialaccount %}
 
 {% block content %}
 <main>
@@ -21,49 +22,49 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                    {% endif %}
-                    <div class="card shadow-lg border-0 rounded-lg mt-5">
-                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Авторизация</h3>
-                        </div>
-                        <div class="card-body">
-                            <form action="{% url 'users:login' %}" method="post">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    {{ form.username }}
-                                    <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя
-                                        пользователя</label>
-                                </div>
-                                <div class="form-group">
-                                    {{ form.password }}
-                                    <label class="small mb-1" for="{{ form.password.id_for_label }}">Пароль</label>
-                                </div>
-                                <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                    <a class="small" href="#">Забыли пароль?</a>
-                                    <input class="btn btn-primary" type="submit" value="Авторизоваться">
-                                </div>
-                                <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                    <a href="#">
-                                        <i class="fab fa-google fa-2x" style="color: #d9503e;"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fab fa-vk fa-2x" style="color: #4a658b;"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fab fa-github fa-2x" style="color: #303030;"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="fab fa-facebook fa-2x" style="color: #405794;"></i>
-                                    </a>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="card-footer text-center">
-                            <div class="small"><a href="{% url 'users:register' %}">Нужен аккаунт? Зарегистрируйся!</a>
+                {% endif %}
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Авторизация</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="{% url 'users:login' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.username }}
+                                <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя
+                                    пользователя</label>
                             </div>
+                            <div class="form-group">
+                                {{ form.password }}
+                                <label class="small mb-1" for="{{ form.password.id_for_label }}">Пароль</label>
+                            </div>
+                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                                <a class="small" href="#">Забыли пароль?</a>
+                                <input class="btn btn-primary" type="submit" value="Авторизоваться">
+                            </div>
+                            <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                                <a href="#">
+                                    <i class="fab fa-google fa-2x" style="color: #d9503e;"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fab fa-vk fa-2x" style="color: #4a658b;"></i>
+                                </a>
+                                <a href="{% provider_login_url 'github' %}">
+                                    <i class="fab fa-github fa-2x" style="color: #303030;"></i>
+                                </a>
+                                <a href="#">
+                                    <i class="fab fa-facebook fa-2x" style="color: #405794;"></i>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="small"><a href="{% url 'users:register' %}">Нужен аккаунт? Зарегистрируйся!</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </main>
 {% endblock %}

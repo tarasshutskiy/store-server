@@ -1,5 +1,5 @@
 {% extends 'products/base.html' %}
-{% load static %}
+{% load static cache %}
 
 
 {% block css %}
@@ -58,6 +58,8 @@
             </div>
 
             <div class="row">
+
+                {% cache 30 object_list %}
                 {% for product in object_list %}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
@@ -70,7 +72,7 @@
                             <h4 class="card-title">
                                 <a href="#">{{ product.name }}</a>
                             </h4>
-                            <h5>{{ product.price }}</h5>
+                            <h5>{{ product.price }} $</h5>
                             <p class="card-text">{{ product.description }}</p>
                         </div>
                         <div class="card-footer text-center">
@@ -81,6 +83,7 @@
                     </div>
                 </div>
                 {% endfor %}
+                {% endcache %}
             </div>
             {% if is_paginated %}
             <nav aria-label="Page navigation example">
@@ -91,10 +94,12 @@
                            tabindex="-1" aria-disabled="true">Previous</a>
                     </li>
                     {% for page in paginator.page_range %}
-                    <li class="page-item"><a class="page-link" href="{% url 'products:paginator' page %}">{{ page }}</a></li>
+                    <li class="page-item"><a class="page-link" href="{% url 'products:paginator' page %}">{{ page }}</a>
+                    </li>
                     {% endfor %}
                     <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
-                        <a class="page-link" href="{% if page_obj.has_next %} {% url 'products:paginator' page_obj.next_page_number %} {% else  %} # {% endif %}">Next</a>
+                        <a class="page-link"
+                           href="{% if page_obj.has_next %} {% url 'products:paginator' page_obj.next_page_number %} {% else  %} # {% endif %}">Next</a>
                     </li>
                 </ul>
             </nav>
