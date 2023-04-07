@@ -34,7 +34,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'products:index' %}">Каталог <i class="fas fa-shopping-bag"></i>
+                    <a class="nav-link" href="{% url 'products:index' %}">Catalog<i class="fas fa-shopping-bag"></i>
                     </a>
                 </li>
                 {% if user.is_authenticated %}
@@ -45,26 +45,26 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" href="{% url 'users:profile' user.id %}">Профиль</a>
+                            <a class="dropdown-item" href="{% url 'users:profile' user.id %}">Profile</a>
                         </li>
-                        <li><a class="dropdown-item" href="{% url 'orders:orders_list' %}">Заказы</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders:orders_list' %}">Orders</a></li>
                         {% if user.is_superuser or user.is_staff %}
                         <li>
-                            <a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         {% endif %}
                         <li>
                             <a class="dropdown-item" href="{% url 'users:logout' %}">
-                                Выйти
+                                Logout
                             </a>
                         </li>
                     </ul>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:login' %}">Войти <i class="fas fa-sign-in-alt"></i></a>
+                    <a class="nav-link" href="{% url 'users:login' %}">Log in <i class="fas fa-sign-in-alt"></i></a>
                 </li>
                 {% endif %}
             </ul>

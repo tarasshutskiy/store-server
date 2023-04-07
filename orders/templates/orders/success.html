@@ -7,12 +7,15 @@
             <div class="col-lg-5">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header">
-                        <h3 class="text-center font-weight-light my-4">Спасибо за заказ!</h3>
+                        <h3 class="text-center font-weight-light my-4">Thank you for the order!</h3>
                     </div>
                     <div class="card-body text-center">
                         <h4>
-                            Ваш заказ успешно сформирован.
+                            Your order has been successfully completed.
                         </h4>
+                        <a id="start-purchase-link" href="{% url 'products:index' %}">
+                        Back to store!
+                        </a>
                     </div>
                 </div>
             </div>
