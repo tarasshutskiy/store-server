@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import environ
+import dj_database_url
 
 from pathlib import Path
 
@@ -37,6 +38,8 @@ env = environ.Env(
     STRIPE_PUBLIC_KEY=(str),
     STRIPE_SECRET_KEY=(str),
     STRIPE_WEBHOOK_SECRET=(str),
+
+    DATABASE_URL=(str)
 )
 
 
@@ -114,6 +117,8 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'store.wsgi.application'
 
 INTERNAL_IPS = [
@@ -149,15 +154,21 @@ CACHES = {
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': env('DATABASE_NAME'),
+#         'USER': env('DATABASE_USER'),
+#         'PASSWORD': env('DATABASE_PASSWORD'),
+#         'HOST': env('DATABASE_HOST'),
+#         'PORT': env('DATABASE_PORT'),
+#     }
+# }
+
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
-    }
+    'default': dj_database_url.parse(env('DATABASE_URL'))
 }
 
 
