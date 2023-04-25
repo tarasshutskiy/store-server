@@ -21,6 +21,8 @@ from django.urls import include, path
 from orders.views import stripe_webhook_view
 from products.views import IndexView
 
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
@@ -31,8 +33,7 @@ urlpatterns = [
     path('webhook/stripe/', stripe_webhook_view, name='stripe_webhook'),
 
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += staticfiles_urlpatterns()
 
 if settings.DEBUG:
     urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')))
