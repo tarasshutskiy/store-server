@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import environ
-import dj_database_url
-
 from pathlib import Path
+
+import dj_database_url
+import environ
 
 env = environ.Env(
     DEBUG=(bool),
@@ -85,6 +85,10 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
     'orders.apps.OrdersConfig',
+
+    'rest_framework',
+    'api.apps.ApiConfig',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -117,8 +121,6 @@ TEMPLATES = [
         },
     },
 ]
-
-
 
 WSGI_APPLICATION = 'store.wsgi.application'
 
@@ -166,12 +168,9 @@ CACHES = {
 #     }
 # }
 
-
-
 DATABASES = {
     'default': dj_database_url.parse(env('DATABASE_URL'))
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -210,16 +209,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
-if DEBUG:
-    STATICFILES_DIRS = [
-        BASE_DIR / 'static',
-    ]
-else:
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+if not DEBUG:
     STATIC_ROOT = BASE_DIR / 'staticfiles'
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
@@ -275,3 +273,13 @@ CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:{REDIS_PORT}"
 STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
+
+# REST
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
